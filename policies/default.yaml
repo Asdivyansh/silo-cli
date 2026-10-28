@@ -1,0 +1,20 @@
+version: "1"
+name: "default"
+description: >
+  The built-in default policy. Drops ALL outbound network egress except
+  connections to the SILO inference proxy (llm.gateway). This ensures
+  the agent can communicate with its LLM but cannot exfiltrate data or
+  reach arbitrary internet endpoints.
+
+# What happens when no rule matches — MUST be "deny" for the default policy
+default: deny
+
+rules:
+  # ── Always-allowed ────────────────────────────────────────────────────────
+  - host: "llm.gateway"
+    action: allow
+    comment: "SILO inference proxy — required for all LLM calls"
+
+  # Host loopback (localhost, 127.0.0.0/8, ::1) is intentionally absent: the
+  # proxy runs on the host, so these would reach the host's own services.
+  # The proxy refuses loopback destinations even if a rule allows them.

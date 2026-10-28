@@ -1,0 +1,18 @@
+node_modules/
+dist/
+*.js.map
+*.d.ts.map
+coverage/
+.env
+.env.local
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / tool configs
+.claude/
+.agents/
+.vscode/
+.idea/

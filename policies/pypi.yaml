@@ -1,0 +1,26 @@
+version: "1"
+name: "pypi"
+description: >
+  Extends the default deny-all policy to allow the agent to install Python
+  packages via pip. Enable with: silo policy apply pypi
+
+default: deny
+
+rules:
+  # ── Inherited from default ────────────────────────────────────────────────
+  - host: "llm.gateway"
+    action: allow
+    comment: "SILO inference proxy"
+
+  # ── PyPI ──────────────────────────────────────────────────────────────────
+  - host: "pypi.org"
+    action: allow
+    comment: "PyPI package index (pip search / metadata)"
+
+  - host: "files.pythonhosted.org"
+    action: allow
+    comment: "PyPI file downloads (sdist and wheels)"
+
+  - host: "*.pythonhosted.org"
+    action: allow
+    comment: "PyPI CDN shards"
