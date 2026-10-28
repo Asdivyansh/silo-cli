@@ -13,14 +13,14 @@ Built-in agent runner · OpenClaw browser automation · Agent framework support 
 
 <br />
 
-[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Docker](https://img.shields.io/badge/Docker-Required-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/CONTRIBUTING.md)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
 
-[Install](#-install) · [Quick Start](#-quick-start) · [Why SILO?](#-why-silo) · [Capabilities](#-capabilities) · [Frameworks](#-framework-support) · [Examples](#examples) · [Docs](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/docs) · [Contributing](#contributing)
+[Install](#-install) · [Quick Start](#-quick-start) · [Why SILO?](#-why-silo) · [Capabilities](#-capabilities) · [Frameworks](#-framework-support) · [Examples](#examples) · [Docs](docs) · [Contributing](#contributing)
 
 <br />
 
@@ -30,12 +30,12 @@ Built-in agent runner · OpenClaw browser automation · Agent framework support 
 
 SILO is a self-hosted developer CLI tool designed to run untrusted AI agents inside hardened Docker sandboxes with controlled egress, credential-managed integrations, and transparent inference auditing. Out of the box, it is built to support advanced agentic workflows including browser automation frameworks such as **OpenClaw**. It relies on several decoupled components:
 
-* **CLI Entrypoint & Commands** ([cli.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/cli.ts)): Command orchestration and interactive onboarding wizard ([onboard.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/commands/onboard.ts)).
-* **Inference & Integration Proxy** ([server.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/proxy/server.ts)): Intercepts and logs LLM/egress requests, injects credentials on the host side, and manages the interactive prompter ([interceptor.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/proxy/interceptor.ts)).
-* **Docker Sandbox Core** ([runner.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/docker/runner.ts)): Spawns and manages hardened, capability-restricted Docker containers with resource limits.
-* **Policy Engine** ([engine.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/policy/engine.ts)): Evaluates egress HTTP requests against declarative YAML policies.
-* **Audit Logger** ([audit.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/audit/audit.ts)): Standardizes and records all proxy and tool-calling event streams to standard JSONL log files.
-* **Config & Encryption Layer** ([manager.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/config/manager.ts)): Secures keys at rest using machine-bound PBKDF2 AES-256-GCM encryption ([encryption.ts](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/src/config/encryption.ts)).
+* **CLI Entrypoint & Commands** ([cli.ts](src/cli.ts)): Command orchestration and interactive onboarding wizard ([onboard.ts](src/commands/onboard.ts)).
+* **Inference & Integration Proxy** ([server.ts](src/proxy/server.ts)): Intercepts and logs LLM/egress requests, injects credentials on the host side, and manages the interactive prompter ([interceptor.ts](src/proxy/interceptor.ts)).
+* **Docker Sandbox Core** ([runner.ts](src/docker/runner.ts)): Spawns and manages hardened, capability-restricted Docker containers with resource limits.
+* **Policy Engine** ([engine.ts](src/policy/engine.ts)): Evaluates egress HTTP requests against declarative YAML policies.
+* **Audit Logger** ([audit.ts](src/audit/audit.ts)): Standardizes and records all proxy and tool-calling event streams to standard JSONL log files.
+* **Config & Encryption Layer** ([manager.ts](src/config/manager.ts)): Secures keys at rest using machine-bound PBKDF2 AES-256-GCM encryption ([encryption.ts](src/config/encryption.ts)).
 
 ---
 
@@ -302,7 +302,7 @@ Every agent runs as a non-root user inside a read-only container with all Linux 
 | **Custom Mounts** | `--mount <host>:<guest>:<mode>` | Map specific host directories to `/host/...` | Selectively exposes specific folders (e.g. read-only) |
 | **Browser Mode** | `--browser` | Sandboxed Chromium; `/tmp` `noexec`; raises memory to `2g` & `/dev/shm` to `512m` | Enables browser automation (e.g., OpenClaw) without host compromise |
 
-Detailed design guidelines on these profiles can be found in the [Capability Profiles Guide](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/docs/capability-profiles.md).
+Detailed design guidelines on these profiles can be found in the [Capability Profiles Guide](docs/capability-profiles.md).
 
 **Opt-in local filesystem access:**
 
@@ -413,7 +413,7 @@ curl http://slack.gateway:8199/chat.postMessage \
   -d '{"channel":"#general","text":"Hello from SILO agent!"}'
 ```
 
-Built-in templates for **Slack**, **GitHub**, **HubSpot**, **Linear**, and **Notion**. See [integrations.md](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/docs/integrations.md) for the full guide.
+Built-in templates for **Slack**, **GitHub**, **HubSpot**, **Linear**, and **Notion**. See [integrations.md](docs/integrations.md) for the full guide.
 
 Integration gateways keep working in `--browser` mode. The browser profile only changes the framework container image and runtime browser mounts; `slack.gateway`, `github.gateway`, and other credential-managed aliases are still routed through the host proxy with credentials injected outside the sandbox.
 
@@ -538,7 +538,7 @@ silo logs
 silo stop
 ```
 
-> Full command reference: [cli-reference.md](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/docs/cli-reference.md)
+> Full command reference: [cli-reference.md](docs/cli-reference.md)
 
 ---
 
@@ -565,7 +565,7 @@ SILO implements **defence in depth** across multiple layers:
 - Automatic log rotation (10MB default, 5 rotated files)
 - Proxy health check (`/_silo/health`) with auto-restart on crash
 
-> Project structure and architecture: [architecture.md](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/docs/architecture.md)
+> Project structure and architecture: [architecture.md](docs/architecture.md)
 
 ---
 
@@ -598,7 +598,7 @@ src/
 sandbox/                          # Dockerfile, entrypoint, Python callbacks
 tests/                            # Vitest test suite
 policies/                         # Example policy YAML files
-docs/                             # [Full documentation](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/docs)
+docs/                             # [Full documentation](docs)
 ```
 
 ---
@@ -607,7 +607,7 @@ docs/                             # [Full documentation](file:///Users/divychaur
 
 Contributions are welcome! Whether it's a bug fix, new feature, documentation improvement, or just a typo — we appreciate it all.
 
-For vulnerability reports, please follow [SECURITY.md](file:///Users/divychaurasia/Desktop/important-stuff/Github-pre-ready/cli-claw-experimentV1.1/SECURITY.md) instead of opening a public issue.
+For vulnerability reports, please follow [SECURITY.md](SECURITY.md) instead of opening a public issue.
 
 1. **Fork** the repo
 2. **Create** a feature branch (`git checkout -b feat/amazing-feature`)
@@ -621,7 +621,7 @@ For vulnerability reports, please follow [SECURITY.md](file:///Users/divychauras
 
 ## License
 
-MIT © [Divyansh Chaurasia](https://github.com/AsDivyansh)
+MIT © SILO contributors. See [LICENSE](LICENSE).
 
 ---
 
