@@ -19,8 +19,8 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/AsDivyansh/silo.git
-cd silo
+git clone https://github.com/Asdivyansh/silo-cli.git
+cd silo-cli
 
 # Install dependencies
 npm install
