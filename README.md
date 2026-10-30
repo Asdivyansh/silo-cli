@@ -43,22 +43,27 @@ SILO is a self-hosted developer CLI tool designed to run untrusted AI agents ins
 
 **Requirements:** Node.js 18+, npm, Docker, and an LLM provider key or local OpenAI-compatible endpoint.
 
+> [!NOTE]
+> SILO is not published to npm yet, so install it from source for now.
+
+**From source:**
+
+```bash
+git clone https://github.com/Asdivyansh/silo-cli.git
+cd silo-cli
+npm install
+npm run build
+npm link
+```
+
+**From npm (once published):**
+
 ```bash
 npm install -g cli-silo
 silo --help
 ```
 
 The npm package is named `cli-silo`; the installed command is `silo`.
-
-**From source:**
-
-```bash
-git clone https://github.com/AsDivyansh/silo.git
-cd silo
-npm install
-npm run build
-npm link
-```
 
 Docker Desktop must be running before `silo build`, `silo start`, or `silo quickstart`.
 
@@ -615,7 +620,7 @@ For vulnerability reports, please follow [SECURITY.md](SECURITY.md) instead of o
 4. **Push** to the branch (`git push origin feat/amazing-feature`)
 5. **Open** a Pull Request
 
-> **First time contributing?** Look for issues labeled [`good first issue`](https://github.com/AsDivyansh/silo/labels/good%20first%20issue).
+> **First time contributing?** Look for issues labeled [`good first issue`](https://github.com/Asdivyansh/silo-cli/labels/good%20first%20issue).
 
 ---
 

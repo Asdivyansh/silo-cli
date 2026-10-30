@@ -16,7 +16,7 @@ FROM python:3.12-slim AS base
 
 LABEL org.opencontainers.image.title="SILO Agent Sandbox"
 LABEL org.opencontainers.image.description="Hardened sandbox for running AI agents via the SILO platform"
-LABEL org.opencontainers.image.source="https://github.com/AsDivyansh/silo"
+LABEL org.opencontainers.image.source="https://github.com/Asdivyansh/silo-cli"
 
 # ---------------------------------------------------------------------------
 # 1. Create a non-root user (UID/GID 1001)
