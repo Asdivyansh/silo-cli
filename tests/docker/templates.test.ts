@@ -24,6 +24,7 @@ const baseSandbox: SandboxConfig = {
 const baseProxy: ProxyConfig = {
   port: 8199,
   running: true,
+  autoOpenLogs: true,
 };
 
 // ---------------------------------------------------------------------------
@@ -99,7 +100,7 @@ describe("buildRunFlags proxy environment", () => {
   const flags = buildRunFlags(baseSandbox, baseProxy);
 
   it("sets http_proxy and https_proxy for container HTTP clients", () => {
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
     const proxyUrl = `http://llm.gateway:${baseProxy.port}`;
 
     expect(envFlags).toContain(`http_proxy=${proxyUrl}`);
@@ -109,7 +110,7 @@ describe("buildRunFlags proxy environment", () => {
   });
 
   it("sets no_proxy for localhost bypass", () => {
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
     const noProxy = envFlags.find((f) => f.startsWith("no_proxy="));
     expect(noProxy).toBeDefined();
     expect(noProxy).toContain("localhost");
@@ -117,7 +118,7 @@ describe("buildRunFlags proxy environment", () => {
   });
 
   it("marks the container with SILO_SANDBOX=1", () => {
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
     expect(envFlags).toContain("SILO_SANDBOX=1");
   });
 });
@@ -138,8 +139,8 @@ describe("buildRunFlags host mounts", () => {
       },
       baseProxy,
     );
-    const volumeFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--volume");
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
+    const volumeFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--volume");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
 
     expect(volumeFlags).toContain("/Users/test/Desktop:/host/Desktop:rw");
     expect(volumeFlags).toContain("/Users/test/Downloads:/host/Downloads:ro");
@@ -158,8 +159,8 @@ describe("buildRunFlags framework support", () => {
       id: "crewai",
       envVars: { CREWAI_API_KEY: "test" },
     });
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
-    const labelFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--label");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
+    const labelFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--label");
 
     expect(envFlags).toContain("SILO_FRAMEWORK=crewai");
     expect(envFlags).toContain("CREWAI_API_KEY=test");
@@ -168,7 +169,7 @@ describe("buildRunFlags framework support", () => {
 
   it("works without framework metadata", () => {
     const flags = buildRunFlags(baseSandbox, baseProxy);
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
     expect(envFlags.some((f) => f.startsWith("SILO_FRAMEWORK="))).toBe(false);
   });
 
@@ -178,7 +179,7 @@ describe("buildRunFlags framework support", () => {
       tmpfsMounts: ["/home/agent"],
       tmpfsMountSizes: { "/home/agent": "256m" },
     });
-    const tmpfsFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--tmpfs");
+    const tmpfsFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--tmpfs");
 
     expect(tmpfsFlags).toContain("/home/agent:size=256m,uid=1001,gid=1001,nosuid");
   });
@@ -190,8 +191,8 @@ describe("buildRunFlags browser profile", () => {
       id: "openclaw",
       browser: true,
     });
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
-    const tmpfsFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--tmpfs");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
+    const tmpfsFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--tmpfs");
 
     expect(flags).toContain("--shm-size");
     expect(flags[flags.indexOf("--shm-size") + 1]).toBe("512m");
@@ -307,7 +308,7 @@ describe("buildRunFlags gateway modes", () => {
     const netIdx = flags.indexOf("--network");
     expect(flags[netIdx + 1]).toBe(SILO_NETWORK);
 
-    const envFlags = flags.filter((f, i) => i > 0 && flags[i - 1] === "--env");
+    const envFlags = flags.filter((_, i) => i > 0 && flags[i - 1] === "--env");
     expect(envFlags).toContain(`http_proxy=http://llm.gateway:${baseProxy.port}`);
     expect(envFlags).toContain("no_proxy=localhost,127.0.0.1,::1,llm.gateway");
   });

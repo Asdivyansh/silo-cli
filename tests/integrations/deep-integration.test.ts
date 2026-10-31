@@ -8,7 +8,7 @@
  *   4. Gateway collision detection (llm.gateway vs integration gateways)
  *   5. Config manager round-trip (write → read with integrations)
  */
-import { describe, it, expect, beforeEach, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { IntegrationConfigSchema, SiloConfigSchema } from "../../src/config/schema.js";
 import type { IntegrationConfig } from "../../src/config/schema.js";
 import { buildRunFlags } from "../../src/docker/templates.js";
@@ -31,7 +31,7 @@ const sandbox: SandboxConfig = {
   memoryLimit: "512m",
 };
 
-const proxy: ProxyConfig = { port: 8199, running: false };
+const proxy: ProxyConfig = { port: 8199, running: false, autoOpenLogs: true };
 
 function makeIntegration(overrides: Partial<IntegrationConfig> = {}): IntegrationConfig {
   return {
