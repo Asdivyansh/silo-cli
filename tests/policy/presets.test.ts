@@ -28,7 +28,8 @@ function makeConfig(policyFile?: string): SiloConfig {
       memoryLimit: "512m",
       policyFile,
     },
-    proxy: { port: 8199, running: false },
+    proxy: { port: 8199, running: false, autoOpenLogs: true },
+    integrations: [],
     onboardedAt: new Date().toISOString(),
   };
 }

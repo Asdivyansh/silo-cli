@@ -57,8 +57,10 @@ function baseConfig(overrides: Partial<SiloConfig> = {}): SiloConfig {
     proxy: {
       port: 8199,
       running: false,
+      autoOpenLogs: true,
     },
     sandbox: {
+      image: "silo-sandbox:latest",
       containerName: "silo-agent",
       workspacePath: "/tmp/workspace",
       cpuLimit: "1.0",

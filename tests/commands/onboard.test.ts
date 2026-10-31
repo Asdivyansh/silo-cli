@@ -61,7 +61,7 @@ describe("onboard command", () => {
     const { writeConfig } = await import("../../src/config/manager.js");
 
     // Simulate wizard answers in sequence (6 steps)
-    (inquirer.prompt as ReturnType<typeof vi.fn>)
+    vi.mocked(inquirer.prompt)
       .mockResolvedValueOnce({ provider: "anthropic" })
       .mockResolvedValueOnce({ apiKey: "sk-ant-test-key-1234" })
       .mockResolvedValueOnce({ model: "claude-sonnet-4-6" })

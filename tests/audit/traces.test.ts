@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { processTrace, type IncomingTrace } from "../../src/audit/traces.js";
+import { processTrace } from "../../src/audit/traces.js";
 
 // Mock the audit module so processTrace doesn't write to disk
 vi.mock("../../src/audit/audit.js", () => ({

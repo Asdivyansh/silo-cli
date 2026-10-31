@@ -1,7 +1,4 @@
 import { describe, it, expect } from "vitest";
-import { writeFileSync, unlinkSync, existsSync, mkdirSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { tmpdir } from "node:os";
 
 // We test the internal logic by re-implementing a minimal version
 // since the audit module uses homedir() for the log path. For unit tests
